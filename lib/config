@@ -1,0 +1,8 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyCwfUMuLFiSUTqxHtBzGYtW6OZDpfdtRqQ",
+    authDomain: "pdv-f87d8.firebaseapp.com",
+    projectId: "pdv-f87d8",
+    storageBucket: "pdv-f87d8.appspot.com",
+    messagingSenderId: "551805913731",
+    appId: "1:551805913731:web:4a1c0dde8da52e5ed9e9b6"
+};
