@@ -86,7 +86,7 @@ class _PrincipalTabletState extends State<PrincipalTablet> {
                                   enableFeedback: false,
                                 ),
                                 onPressed: () {},
-                                child: _page == 1 ? Image.asset("assets/ico-pedidos-selected.png") : Image.asset("assets/ico-pedidos.png"),
+                                child: _page == 4 ? Image.asset("assets/ico-pedidos-selected.png") : Image.asset("assets/ico-pedidos.png"),
                               ),
                             ),
                             SizedBox(height: 18),

@@ -10,6 +10,39 @@ class ProdutosContent extends StatefulWidget {
   State<ProdutosContent> createState() => _ProdutosContentState();
 }
 
+bool tipoProduto = false;
+
+var _produtos = [
+  {
+    "nomeProduto": "Refrigerante",
+    "descricaoProduto": "Refrigerante de 2 litros",
+    "precoProduto": "R\$ 3,00",
+    "tipoProduto": false,
+    "statusProduto": true,
+  },
+  {
+    "nomeProduto": "Coxinha de Frango",
+    "descricaoProduto": "Com Requeijão",
+    "precoProduto": "R\$ 12,00",
+    "tipoProduto": true,
+    "statusProduto": true,
+  },
+  {
+    "nomeProduto": "Coxinha de Frango",
+    "descricaoProduto": "Tradicional",
+    "precoProduto": "R\$ 12,00",
+    "tipoProduto": true,
+    "statusProduto": true,
+  },
+  {
+    "nomeProduto": "Pizza",
+    "descricaoProduto": "Pizza de queijo",
+    "precoProduto": "R\$ 12,00",
+    "tipoProduto": true,
+    "statusProduto": false,
+  },
+];
+
 bool mostrarBuscar = false;
 TextEditingController nomeProdutoController = TextEditingController();
 TextEditingController descricaoProdutoController = TextEditingController();
@@ -75,9 +108,15 @@ class _ProdutosContentState extends State<ProdutosContent> {
             child: ListView.builder(
               padding: EdgeInsets.all(16),
               shrinkWrap: true,
-              itemCount: 2,
+              itemCount: _produtos.length,
               itemBuilder: (BuildContext context, int i) {
-                return ProdutoItemTablet();
+                return ProdutoItemTablet(
+                  tipoProduto: _produtos[i]["tipoProduto"] as bool,
+                  descricaoProduto: _produtos[i]["descricaoProduto"].toString(),
+                  nomeProduto: _produtos[i]["nomeProduto"].toString(),
+                  precoProduto: _produtos[i]["precoProduto"].toString(),
+                  statusProduto: _produtos[i]["statusProduto"] as bool,
+                );
               },
             ),
           ),
@@ -95,11 +134,9 @@ class _ProdutosContentState extends State<ProdutosContent> {
     );
   }
 
-  alertCadProduto(
-    BuildContext context,
-  ) {
+  alertCadProduto(BuildContext context) {
     //configura o AlertDialog
-    AlertDialog alert = AlertDialog(
+    AlertDialog(
       title: Text("Novo Produto", style: TextStyle(fontSize: 20)),
       content: SingleChildScrollView(
         child: Container(
@@ -125,11 +162,24 @@ class _ProdutosContentState extends State<ProdutosContent> {
                   hintText: 'Valor',
                 ),
               ),
-              TextField(
-                controller: categoriaProdutoController,
-                decoration: InputDecoration(
-                  hintText: 'Categoria',
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Tipo:", style: TextStyle(fontSize: 14)),
+                  Switch(
+                    value: tipoProduto,
+                    onChanged: (value) {
+                      setState(() {
+                        tipoProduto = !tipoProduto;
+                        print(tipoProduto);
+                      });
+                      activeTrackColor:
+                      Colors.red;
+                      activeColor:
+                      Colors.orange;
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -139,13 +189,15 @@ class _ProdutosContentState extends State<ProdutosContent> {
         ElevatedButton(
           onPressed: () {
             var produto = {
-              "nome": nomeProdutoController.text,
-              "descricao": descricaoProdutoController.text,
-              "valor": valorProdutoController.text,
-              "categoria": categoriaProdutoController.text,
-              "status": true,
+              "nomeProduto": nomeProdutoController.text,
+              "descricaoProduto": descricaoProdutoController.text,
+              "precoProduto": valorProdutoController.text,
+              "tipoProduto": tipoProduto,
+              "statusProduto": true,
             };
-            print(produto);
+            setState(() {
+              _produtos.add(produto);
+            });
             nomeProdutoController.clear();
             descricaoProdutoController.clear();
             valorProdutoController.clear();
@@ -166,7 +218,87 @@ class _ProdutosContentState extends State<ProdutosContent> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return alert;
+        return AlertDialog(
+          title: Text("Novo Produto", style: TextStyle(fontSize: 20)),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: nomeProdutoController,
+                        decoration: InputDecoration(
+                          hintText: 'Nome do produto',
+                        ),
+                      ),
+                      TextField(
+                        controller: descricaoProdutoController,
+                        decoration: InputDecoration(
+                          hintText: 'Descrição',
+                        ),
+                      ),
+                      TextField(
+                        controller: valorProdutoController,
+                        decoration: InputDecoration(
+                          hintText: 'Valor',
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Vai pra Cozinha ?", style: TextStyle(fontSize: 14)),
+                          Switch(
+                            value: tipoProduto,
+                            onChanged: (value) {
+                              setState(() {
+                                tipoProduto = !tipoProduto;
+                                print(tipoProduto);
+                              });
+                              activeTrackColor:
+                              Colors.red;
+                              activeColor:
+                              Colors.orange;
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                var produto = {
+                  "nomeProduto": nomeProdutoController.text,
+                  "descricaoProduto": descricaoProdutoController.text,
+                  "precoProduto": valorProdutoController.text,
+                  "tipoProduto": tipoProduto,
+                  "statusProduto": true,
+                };
+                setState(() {
+                  _produtos.add(produto);
+                });
+                nomeProdutoController.clear();
+                descricaoProdutoController.clear();
+                valorProdutoController.clear();
+                categoriaProdutoController.clear();
+                Navigator.pop(context);
+              },
+              child: Text("Salvar", style: TextStyle(color: Colors.white)),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancelar", style: TextStyle(color: Colors.white))),
+          ],
+        );
       },
     );
   }

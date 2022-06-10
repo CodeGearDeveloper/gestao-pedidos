@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class GarconItemTablet extends StatefulWidget {
-  GarconItemTablet({Key? key}) : super(key: key);
+  final String nome;
+  final String email;
+  GarconItemTablet({Key? key, required this.nome, required this.email}) : super(key: key);
 
   @override
   State<GarconItemTablet> createState() => _GarconItemTabletState();
@@ -17,8 +19,15 @@ class _GarconItemTabletState extends State<GarconItemTablet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Nome do Garçom:", style: TextStyle(fontSize: 20)),
-              Text("Alessandro Aguiar Brito", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text("Nome do Garçom:", style: TextStyle(fontSize: 18)),
+              Text("${widget.nome}", style: TextStyle(fontSize: 16)),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("E-mail:", style: TextStyle(fontSize: 18)),
+              Text("${widget.email}", style: TextStyle(fontSize: 16)),
             ],
           ),
           Divider(color: Colors.orange),

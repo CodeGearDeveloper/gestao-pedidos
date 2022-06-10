@@ -9,8 +9,24 @@ class GarconsContentTablet extends StatefulWidget {
   State<GarconsContentTablet> createState() => _GarconsContentTabletState();
 }
 
+var _garcom = [
+  {
+    "nome": "João",
+    "email": "email1@email.com",
+  },
+  {
+    "nome": "Maria",
+    "email": "email2@email.com",
+  },
+  {
+    "nome": "José",
+    "email": "email2@email.com",
+  }
+];
+
 bool mostrarBuscar = false;
 TextEditingController nomeGarconController = TextEditingController();
+TextEditingController emailGarconController = TextEditingController();
 
 class _GarconsContentTabletState extends State<GarconsContentTablet> {
   @override
@@ -71,9 +87,12 @@ class _GarconsContentTabletState extends State<GarconsContentTablet> {
             child: ListView.builder(
               padding: EdgeInsets.all(16),
               shrinkWrap: true,
-              itemCount: 2,
+              itemCount: _garcom.length,
               itemBuilder: (BuildContext context, int i) {
-                return GarconItemTablet();
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GarconItemTablet(nome: _garcom[i]["nome"].toString(), email: _garcom[i]["email"].toString()),
+                );
               },
             ),
           ),
@@ -109,6 +128,12 @@ class _GarconsContentTabletState extends State<GarconsContentTablet> {
                   hintText: 'Nome do Garçom',
                 ),
               ),
+              TextField(
+                controller: emailGarconController,
+                decoration: InputDecoration(
+                  hintText: 'E-mail',
+                ),
+              ),
             ],
           ),
         ),
@@ -116,6 +141,12 @@ class _GarconsContentTabletState extends State<GarconsContentTablet> {
       actions: [
         ElevatedButton(
           onPressed: () {
+            setState(() {
+              _garcom.add({
+                "nome": nomeGarconController.text,
+                "email": emailGarconController.text,
+              });
+            });
             Navigator.pop(context);
           },
           child: Text("Salvar", style: TextStyle(color: Colors.white)),
