@@ -64,7 +64,7 @@ class _ProdutoItemTabletState extends State<ProdutoItemTablet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Status:", style: TextStyle(fontSize: 14)),
+              Text("Produto disponivel:", style: TextStyle(fontSize: 14)),
               Switch(
                 value: widget.statusProduto,
                 onChanged: (value) {

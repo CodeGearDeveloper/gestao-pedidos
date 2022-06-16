@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "551805913731",
+    "project_id": "pdv-f87d8",
+    "storage_bucket": "pdv-f87d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551805913731:android:08bd6967130e87d6d9e9b6",
+        "android_client_info": {
+          "package_name": "br.com.CodeGearDeveloper.gestao_pedidos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551805913731-kagk4pgljsgsnl1bpgst2sjjccj5pqva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvnpQvr3Xmqv10LKz3sfDc53X3_afLLp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551805913731-kagk4pgljsgsnl1bpgst2sjjccj5pqva.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551805913731-cpu0390kqk5poar6p8tnd5f9qf6vc3jv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.CodeGearDeveloper.gestaoPedidos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

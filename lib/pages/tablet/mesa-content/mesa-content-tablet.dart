@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gestao_pedidos/controllers/configuracao-controller.dart';
+import 'package:provider/provider.dart';
 
 import 'mesa-item/mesa-item-tablet.dart';
 
@@ -11,16 +13,17 @@ class MesaContentTablet extends StatefulWidget {
 
 var mesas = [];
 bool mostrarBuscar = false;
-gerarMesas() {
-  for (var i = 0; i < 16; i++) {
-    mesas.add("");
-  }
-}
 
 class _MesaContentTabletState extends State<MesaContentTablet> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<ConfiguracaoController>().getConfig(config: "all");
+  }
+
+  @override
   Widget build(BuildContext context) {
-    mesas.length == 0 ? gerarMesas() : null;
     // ignore: unused_local_variable
     final fullHeight = MediaQuery.of(context).size.height;
     final fullwidth = MediaQuery.of(context).size.width;
@@ -66,19 +69,21 @@ class _MesaContentTabletState extends State<MesaContentTablet> {
           SizedBox(height: 12),
           Expanded(
             child: SingleChildScrollView(
-              child: Container(
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 15,
-                  children: [
-                    for (var i = 0; i < mesas.length; i++)
-                      MesaItemTablet(
-                        nome: "Mesa ${i + 1}",
-                        status: false,
-                      ),
-                  ],
-                ),
-              ),
+              child: Container(child: Consumer<ConfiguracaoController>(
+                builder: (context, controller, child) {
+                  return Wrap(
+                    spacing: 10,
+                    runSpacing: 15,
+                    children: [
+                      for (var i = 0; i < controller.quantidadeMesas; i++)
+                        MesaItemTablet(
+                          nome: "Mesa ${i + 1}",
+                          status: false,
+                        ),
+                    ],
+                  );
+                },
+              )),
             ),
           ),
         ],

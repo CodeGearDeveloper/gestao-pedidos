@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gestao_pedidos/pages/tablet/configuracoes-page/configuracoes-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/garcons-content/garcons-content-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/mesa-content/mesa-content-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/produtos-page/produtos-content.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controllers/configuracao-controller.dart';
 
 class PrincipalTablet extends StatefulWidget {
   PrincipalTablet({Key? key}) : super(key: key);
@@ -147,8 +151,17 @@ class _PrincipalTabletState extends State<PrincipalTablet> {
                               elevation: 0,
                               enableFeedback: false,
                             ),
-                            onPressed: () {},
-                            child: Image.asset("assets/ico-config.png"),
+                            onPressed: () {
+                              setState(() {
+                                _page = 3;
+                                _pageController.animateToPage(
+                                  _page,
+                                  duration: Duration(milliseconds: 600),
+                                  curve: Curves.easeIn,
+                                );
+                              });
+                            },
+                            child: _page == 3 ? Image.asset("assets/ico-config-selected.png") : Image.asset("assets/ico-config.png"),
                           ),
                         ),
                       ],
@@ -178,6 +191,7 @@ class _PrincipalTabletState extends State<PrincipalTablet> {
                       MesaContentTablet(),
                       ProdutosContent(),
                       GarconsContentTablet(),
+                      ConfiguracaoPageTablet(),
                     ],
                   ),
                 ),

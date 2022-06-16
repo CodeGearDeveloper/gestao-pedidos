@@ -1,3 +1,5 @@
+// ignore_for_file: unused_label
+
 import 'package:flutter/material.dart';
 
 import '../../../widget/button-simples/button-simples.dart';
@@ -26,20 +28,6 @@ var _produtos = [
     "precoProduto": "R\$ 12,00",
     "tipoProduto": true,
     "statusProduto": true,
-  },
-  {
-    "nomeProduto": "Coxinha de Frango",
-    "descricaoProduto": "Tradicional",
-    "precoProduto": "R\$ 12,00",
-    "tipoProduto": true,
-    "statusProduto": true,
-  },
-  {
-    "nomeProduto": "Pizza",
-    "descricaoProduto": "Pizza de queijo",
-    "precoProduto": "R\$ 12,00",
-    "tipoProduto": true,
-    "statusProduto": false,
   },
 ];
 
