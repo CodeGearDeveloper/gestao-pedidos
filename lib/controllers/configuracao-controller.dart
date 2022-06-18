@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
 class ConfiguracaoController extends ChangeNotifier {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   int quantidadeMesas = 0;
+  late Map<String, dynamic>? mesa = {};
   var razaoSocial = "";
   var nomeFantasia = "";
   var cnpj = "";
@@ -21,6 +23,31 @@ class ConfiguracaoController extends ChangeNotifier {
   var cidade = "";
   var estado = "";
   var tipoLogradouro = "";
+  bool mesaOcupada = false;
+
+  Future mesaListen() async {
+    final docRef = await db.collection("NomeLoja").doc("user.id").collection("config").doc("mesas");
+    docRef.snapshots().listen(
+      (event) async {
+        mesa = await event.data();
+        quantidadeMesas = mesa!.length;
+        for (var i = 0; i <= mesa!.length; i++) {
+          try {
+            if (mesa!["${i + 1}"]["status"]) {
+              mesaOcupada = true;
+              i = mesa!.length;
+            } else {
+              throw new Exception('');
+            }
+          } catch (e) {
+            mesaOcupada = false;
+          }
+        }
+        notifyListeners();
+      },
+      onError: (error) {},
+    );
+  }
 
   getConfig({config}) async {
     if (config == "mesas") {
@@ -67,6 +94,7 @@ class ConfiguracaoController extends ChangeNotifier {
           event.docs.forEach((doc) {
             if (doc.id == "mesas") {
               quantidadeMesas = doc.data().length;
+              mesa = doc.data();
             }
           });
           event.docs.forEach((doc) {

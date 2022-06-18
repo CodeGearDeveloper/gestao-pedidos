@@ -1,11 +1,11 @@
-// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:gestao_pedidos/controllers/controllers-list.dart';
 import 'package:gestao_pedidos/pages/home-page/home-page.dart';
 import 'package:gestao_pedidos/pages/tablet/principal-tablet/principal-tablet.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'controllers/configuracao-controller.dart';
+
 import 'firebase_options.dart';
 
 const apiKey = "AIzaSyCwfUMuLFiSUTqxHtBzGYtW6OZDpfdtRqQ";

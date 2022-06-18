@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:gestao_pedidos/controllers/mesa-controller.dart';
 import 'package:gestao_pedidos/pages/tablet/configuracoes-page/widgets/widget-text.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class ConfiguracaoPageTablet extends StatefulWidget {
 class _ConfiguracaoPageTabletState extends State<ConfiguracaoPageTablet> {
   var dadosPessoais;
   bool edtField = true;
-  int _radioValue = 1;
+  // int _radioValue = 1;
   bool configMesas = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController docController = TextEditingController();
@@ -28,14 +29,8 @@ class _ConfiguracaoPageTabletState extends State<ConfiguracaoPageTablet> {
   TextEditingController enderecoController = TextEditingController();
   TextEditingController quantidadeMesasController = TextEditingController();
 
-  final snackBar = SnackBar(
-    content: Text('Quantidade de mesas alterada com sucesso!'),
-  );
-
   @override
   Widget build(BuildContext context) {
-    var qtMesas = Provider.of<ConfiguracaoController>(context).quantidadeMesas.toString();
-    quantidadeMesasController.text = Provider.of<ConfiguracaoController>(context).quantidadeMesas.toString();
     // ignore: unused_local_variable
     final fullHeight = MediaQuery.of(context).size.height;
     final fullwidth = MediaQuery.of(context).size.width;
@@ -76,16 +71,31 @@ class _ConfiguracaoPageTabletState extends State<ConfiguracaoPageTablet> {
                             if (configMesas == false) {
                               setState(() {
                                 configMesas = !configMesas;
-                                quantidadeMesasController.text = quantidadeMesasController.text;
+                                quantidadeMesasController.text = controller.quantidadeMesas.toString();
                               });
                             } else {
-                              setState(() {
-                                configMesas = !configMesas;
-                              });
-                              await context.read<MesaController>().criarMesas(numeroMesas: int.parse(quantidadeMesasController.text));
-                              controller.getConfig(config: "mesas");
-
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              //TODO
+                              if (context.read<ConfiguracaoController>().mesaOcupada) {
+                                setState(() {
+                                  configMesas = !configMesas;
+                                });
+                                final snackBar = SnackBar(
+                                  content: Text('Você ainda possui mesas em aberto!'),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              } else {
+                                setState(() {
+                                  configMesas = !configMesas;
+                                });
+                                await context.read<MesaController>().criarMesas(
+                                      numeroMesas: int.parse(quantidadeMesasController.text),
+                                    );
+                                controller.getConfig(config: "mesas");
+                                final snackBar = SnackBar(
+                                  content: Text('Quantidade de mesas alterada com sucesso!'),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
                             }
                           },
                           icon: configMesas ? Icon(Icons.check) : Icon(Icons.edit),
@@ -114,6 +124,9 @@ class _ConfiguracaoPageTabletState extends State<ConfiguracaoPageTablet> {
                                           ),
                                           keyboardType: TextInputType.number,
                                           textAlign: TextAlign.center,
+                                          onSubmitted: (value) async {
+                                            quantidadeMesasController.text = value;
+                                          },
                                         ),
                                       )
                                     ],

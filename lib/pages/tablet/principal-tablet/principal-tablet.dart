@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:gestao_pedidos/pages/tablet/configuracoes-page/configuracoes-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/garcons-content/garcons-content-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/mesa-content/mesa-content-tablet.dart';
 import 'package:gestao_pedidos/pages/tablet/produtos-page/produtos-content.dart';
-import 'package:provider/provider.dart';
-
-import '../../../controllers/configuracao-controller.dart';
 
 class PrincipalTablet extends StatefulWidget {
   PrincipalTablet({Key? key}) : super(key: key);

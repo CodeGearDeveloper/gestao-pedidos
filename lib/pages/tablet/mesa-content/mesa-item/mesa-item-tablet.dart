@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:gestao_pedidos/controllers/mesa-controller.dart';
+import 'package:provider/provider.dart';
+
 // ignore: must_be_immutable
 class MesaItemTablet extends StatefulWidget {
   final String nome;
   late bool status;
-  MesaItemTablet({Key? key, required this.nome, required this.status}) : super(key: key);
+  final int nMesa;
+
+  MesaItemTablet({Key? key, required this.nome, required this.status, required this.nMesa}) : super(key: key);
 
   @override
   State<MesaItemTablet> createState() => _MesaItemTabletState();
@@ -65,9 +70,6 @@ class _MesaItemTabletState extends State<MesaItemTablet> {
                       value: widget.status,
                       onChanged: (value) {
                         alertFecharMesa(context);
-                        // setState(() {
-                        //   widget.status = !widget.status;
-                        // });
                       },
                       activeTrackColor: Colors.red,
                       activeColor: Colors.orange,
@@ -107,10 +109,8 @@ class _MesaItemTabletState extends State<MesaItemTablet> {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () {
-            setState(() {
-              widget.status = !widget.status;
-            });
+          onPressed: () async {
+            await context.read<MesaController>().statusMesa(statusAtual: !widget.status, nMesa: widget.nMesa);
             Navigator.pop(context);
           },
           child: Text(widget.status == true ? "Ok" : "Sim", style: TextStyle(color: Colors.white)),

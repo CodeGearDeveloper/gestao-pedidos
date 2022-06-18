@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:gestao_pedidos/controllers/configuracao-controller.dart';
+import 'package:gestao_pedidos/controllers/mesa-controller.dart';
 import 'package:provider/provider.dart';
 
 import 'mesa-item/mesa-item-tablet.dart';
@@ -15,11 +17,15 @@ var mesas = [];
 bool mostrarBuscar = false;
 
 class _MesaContentTabletState extends State<MesaContentTablet> {
+  Future getData() async {
+    await context.read<ConfiguracaoController>().getConfig(config: "all");
+    await context.read<ConfiguracaoController>().mesaListen();
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    context.read<ConfiguracaoController>().getConfig(config: "all");
+    getData();
   }
 
   @override
@@ -69,21 +75,24 @@ class _MesaContentTabletState extends State<MesaContentTablet> {
           SizedBox(height: 12),
           Expanded(
             child: SingleChildScrollView(
-              child: Container(child: Consumer<ConfiguracaoController>(
-                builder: (context, controller, child) {
-                  return Wrap(
-                    spacing: 10,
-                    runSpacing: 15,
-                    children: [
-                      for (var i = 0; i < controller.quantidadeMesas; i++)
-                        MesaItemTablet(
-                          nome: "Mesa ${i + 1}",
-                          status: false,
-                        ),
-                    ],
-                  );
-                },
-              )),
+              child: Container(
+                child: Consumer<ConfiguracaoController>(
+                  builder: (context, controller, child) {
+                    return Wrap(
+                      spacing: 10,
+                      runSpacing: 15,
+                      children: [
+                        for (var i = 0; i < controller.quantidadeMesas; i++)
+                          MesaItemTablet(
+                            nome: "Mesa ${i + 1}",
+                            status: controller.mesa!["${i + 1}"]['status'],
+                            nMesa: i + 1,
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ],
