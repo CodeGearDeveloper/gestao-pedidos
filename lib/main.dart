@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gestao_pedidos/controllers/controllers-list.dart';
 import 'package:gestao_pedidos/pages/home-page/home-page.dart';
-import 'package:gestao_pedidos/pages/tablet/principal-tablet/principal-tablet.dart';
+import 'package:gestao_pedidos/widget/auth-check.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: getDeviceType() == "phone" ? HomePage() : PrincipalTablet(),
+      home: getDeviceType() == "phone" ? HomePage() : AuthCheck(),
     );
   }
 }

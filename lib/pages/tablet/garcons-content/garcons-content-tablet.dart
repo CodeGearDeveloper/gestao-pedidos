@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:gestao_pedidos/auth/auth.dart';
+import 'package:gestao_pedidos/controllers/garcom-controller.dart';
 import 'package:gestao_pedidos/widget/tablet/garcon-item/garcon-item-tablet.dart';
+import 'package:provider/provider.dart';
+
 import '../../../widget/button-simples/button-simples.dart';
 
 class GarconsContentTablet extends StatefulWidget {
@@ -31,6 +36,7 @@ TextEditingController emailGarconController = TextEditingController();
 class _GarconsContentTabletState extends State<GarconsContentTablet> {
   @override
   Widget build(BuildContext context) {
+    var user = context.read<AuthService>().usuario;
     // ignore: unused_local_variable
     final fullHeight = MediaQuery.of(context).size.height;
     final fullwidth = MediaQuery.of(context).size.width;
@@ -40,7 +46,7 @@ class _GarconsContentTabletState extends State<GarconsContentTablet> {
         Row(
           children: [
             Text(
-              "Garçons",
+              "Garçons ${user!.uid}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Expanded(child: Container()),
@@ -102,7 +108,13 @@ class _GarconsContentTabletState extends State<GarconsContentTablet> {
           child: ButtonSimples(
             title: "Novo Garçom",
             onPressed: () {
-              alertCadGarcom(context);
+              //TODO criar sistema de cadastro com login e senha direto no BD
+              context.read<GarcomController>().novoGarcom(
+                    nome: "Alessandro",
+                    email: "ale@ale.com",
+                    senha: "123456",
+                  );
+              // alertCadGarcom(context);
             },
           ),
         ),

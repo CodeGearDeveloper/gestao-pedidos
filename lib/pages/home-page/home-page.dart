@@ -48,12 +48,12 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "COZINHA",
-                                  style: TextStyle(fontSize: 36),
+                                  "Gerencia",
+                                  style: TextStyle(fontSize: 36, color: Colors.white),
                                 ),
                                 Text(
-                                  "Gestão de Pedidos",
-                                  style: TextStyle(fontSize: 14),
+                                  "Gestão do seu restaurante",
+                                  style: TextStyle(fontSize: 14, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -84,11 +84,11 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Text(
                                   "GARÇOM",
-                                  style: TextStyle(fontSize: 36),
+                                  style: TextStyle(fontSize: 36, color: Colors.white),
                                 ),
                                 Text(
                                   "Atendimento",
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(fontSize: 14, color: Colors.white),
                                 ),
                               ],
                             ),
